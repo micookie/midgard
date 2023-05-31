@@ -11,7 +11,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"strings"
 	"time"
 
 	"changkun.de/x/midgard/internal/clipboard"
@@ -31,10 +30,10 @@ func (m *Daemon) wsConnect() error {
 	h := http.Header{"Authorization": {"Basic " + token}}
 
 	api := types.EndpointSubscribe
-	if strings.Contains(config.Get().Domain, "localhost") || strings.Contains(config.Get().Domain, "0.0.0.0") {
-		api = "ws://" + api
-	} else {
+	if config.Get().Https {
 		api = "wss://" + api
+	} else {
+		api = "ws://" + api
 	}
 	log.Println("connecting to:", api)
 	conn, _, err := websocket.DefaultDialer.Dial(api, h)

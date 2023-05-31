@@ -5,7 +5,8 @@
 ---
 # midgard common settings
 title: "Changkun"
-domain: changkun.de # domain that runs midgard server
+domain: 127.0.0.1:9090 # domain that runs midgard server
+https: false
 
 # midgard server settings
 # these settings are only used in server mode (run under `mg server`)
@@ -15,7 +16,7 @@ server:
   store: # data folder is in ./data
     prefix: /midgard # access via changkun.de/midgard/*
     backup:
-      enable: true # enable backup
+      enable: false # enable backup
       interval: 60 # every hour
       repo: https://github.com/changkun/midgard-data.git
   auth:

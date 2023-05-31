@@ -20,6 +20,7 @@ import (
 // macOS: Ctrl+Option+s
 // Windows: Unsupported
 func Handle(ctx context.Context, fn func()) {
+	return
 	hk := hotkey.New(getModifiers(), getKey())
 	if err := hk.Register(); err != nil {
 		log.Printf("Hotkey registration failed: %v", err)

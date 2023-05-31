@@ -7,6 +7,7 @@ package utils
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 	"strings"
@@ -28,13 +29,15 @@ func Request(method, api string, data interface{}) ([]byte, error) {
 		}
 	}
 
-	if !strings.HasPrefix(api, "https://") || !strings.HasPrefix(api, "http://") {
-		if strings.Contains(config.Get().Domain, "localhost") {
-			api = "http://" + api
-		} else {
+	if !strings.HasPrefix(api, "https://") && !strings.HasPrefix(api, "http://") {
+		if config.Get().Https {
 			api = "https://" + api
+		} else {
+			api = "http://" + api
 		}
 	}
+
+	fmt.Println(api)
 
 	c := &http.Client{}
 	req, err := http.NewRequest(method, api, bytes.NewBuffer(body))
